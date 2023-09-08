@@ -1,0 +1,173 @@
+enum RoleType {
+  MEMBER
+  MANAGER
+}
+
+enum PackType {
+  FFP
+  RBC
+  PLT
+}
+
+enum AboSystemType {
+  A
+  B
+  O
+  AB
+}
+
+enum RhFactorType {
+  POSITIVE
+  NEGATIVE
+}
+
+enum PackStatus {
+  UNOPENED
+  RETURNED
+  USED
+  OPENED
+  DISPOSED
+}
+
+enum OrderStatus {
+  CREATED
+  COMPLETED
+}
+
+enum OrganizationJobType {
+  CREATE
+  JOIN
+  DELETE
+}
+
+enum JobStatus {
+  CREATED
+  STARTED
+  FINISHED
+  FAILED
+}
+
+type Account @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  name: String!
+  userId: String! @index(name: "byUserId")
+  organizationId: ID! @index(name: "byOrganizationId")
+  createdAt: AWSDateTime!
+  organization: Organization @belongsTo
+  role: AccountRole! @hasOne
+}
+
+type AccountRole @model @auth(rules: [
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  role: RoleType!
+  accountId: ID! @index(name: "byAccountId")
+  organizationId: ID! @index(name: "byOrganizationId")
+  organization: Organization! @hasOne
+  account: Account! @hasOne
+}
+
+type Organization @model @auth(rules: [
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  name: String!
+  accounts: [Account] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  packs: [Pack] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  applications: [Application] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  orders: [Order] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+}
+
+type Pack @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  name: String
+  type: PackType!
+  rhFactor: RhFactorType!
+  aboSystem: AboSystemType!
+  quantity: Int!
+  status: PackStatus!
+  expiredAt: AWSDateTime!
+  createdAt: AWSDateTime!
+  organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
+  organization: Organization! @hasOne(fields: ["organizationId"])
+  applicationPackDetails: [ApplicationPackDetail] @hasMany(indexName: "byPackId", fields: ["id"])
+  orderPackDetails: [OrderPackDetail] @hasMany(indexName: "byPackId", fields: ["id"])
+}
+
+type Application @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
+  applicantId: ID! @index(name: "byApplicantId")
+  order: Order @belongsTo
+  createdAt: AWSDateTime!
+  organization: Organization! @hasOne(fields: ["organizationId"])
+  applicant: Account! @hasOne (fields: ["applicantId"])
+  packDetails: [ApplicationPackDetail!] @hasMany(indexName: "byApplicationId", fields: ["id"])
+}
+
+type ApplicationPackDetail @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  applicationId: ID! @index(name: "byApplicationId")
+  organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
+  packId: ID! @index(name: "byPackId")
+  createdAt: AWSDateTime!
+  organization: Organization! @hasOne(fields: ["organizationId"])
+  application: Application! @belongsTo(fields: ["applicationId"])
+  pack: Pack! @belongsTo(fields: ["packId"])
+}
+
+type Order @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  status: OrderStatus!
+  organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
+  applicationId: ID @index(name: "byApplicationId")
+  createdAt: AWSDateTime!
+  organization: Organization! @hasOne(fields: ["organizationId"])
+  application: Application @hasOne (fields: ["applicationId"])
+  orderPackDetails: [OrderPackDetail!] @hasMany(indexName: "byOrderId", fields: ["id"])
+}
+
+type OrderPackDetail @model @auth(rules:[
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+]) {
+  id: ID!
+  orderId: ID! @index(name: "byOrderId")
+  packId: ID! @index(name: "byPackId")
+  organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
+  createdAt: AWSDateTime!
+  order: Order @belongsTo(fields: ["orderId"])
+  pack: Pack @belongsTo(fields: ["packId"])
+  organization: Organization! @hasOne(fields: ["organizationId"])
+}
+
+type OrganizationJob @model @auth (rules: [{ allow: owner, operations: [create] }]) {
+  id: ID!
+  type: OrganizationJobType!
+  status: JobStatus!
+  errorMessage: String
+  "type: CREATE"
+  createName: String
+  createAccountName: String
+  "type: JOIN"
+  joinCode: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+}

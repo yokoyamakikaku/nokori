@@ -1,0 +1,12 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon" : true,
+      "align"      : "colon"
+    }]
+  }
+}

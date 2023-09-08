@@ -1,0 +1,21 @@
+:root {
+  font-size: 14px;
+
+  --amplify-font-sizes-xxxxs: 0.375rem;
+  --amplify-font-sizes-xxxs: 0.5625rem;
+  --amplify-font-sizes-xxs: 0.75rem;
+  --amplify-font-sizes-xs: 0.875rem;
+  --amplify-font-sizes-small: 0.9375rem;
+  --amplify-font-sizes-medium: 1rem;
+  --amplify-font-sizes-large: 1.15rem;
+  --amplify-font-sizes-xl: 1.2rem;
+  --amplify-font-sizes-xxl: 1.3rem;
+  --amplify-font-sizes-xxxl: 1.4rem;
+  --amplify-font-sizes-xxxxl: 1.5rem;
+
+  --amplify-components-table-data-padding: var(--amplify-space-xs);
+}
+
+body {
+  margin: 0;
+}

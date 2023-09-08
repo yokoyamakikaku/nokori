@@ -1,0 +1,23 @@
+{
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nokori-main-160326-authRole",
+      "UnauthRoleArn": "arn:aws:iam::693825121436:role/amplify-nokori-main-160326-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::693825121436:role/amplify-nokori-main-160326-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-nokori-main-160326-deployment",
+      "UnauthRoleName": "amplify-nokori-main-160326-unauthRole",
+      "StackName": "amplify-nokori-main-160326",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:693825121436:stack/amplify-nokori-main-160326/fd8de960-4a27-11ee-b495-0a4ba3b58dad",
+      "AmplifyAppId": "d37wq5dy4mo8my"
+    },
+    "categories": {
+      "auth": {
+        "nokori123d8c52": {}
+      },
+      "api": {
+        "nokori": {}
+      }
+    }
+  }
+}
