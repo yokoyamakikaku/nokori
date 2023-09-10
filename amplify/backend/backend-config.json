@@ -7,7 +7,7 @@
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "nokori123d8c52"
+          "resourceName": "nokoriAuth"
         }
       ],
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authnokori123d8c52"
+              "userPoolId": "authnokoriAuth"
             }
           }
         }
@@ -26,7 +26,7 @@
     }
   },
   "auth": {
-    "nokori123d8c52": {
+    "nokoriAuth": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -51,6 +51,48 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "handleOrganizationJob": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "nokori"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "nokori"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_handleOrganizationJob_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "handleOrganizationJob"
+        }
+      ]
+    },
+    "AMPLIFY_function_handleOrganizationJob_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "handleOrganizationJob"
+        }
+      ]
     }
   }
 }

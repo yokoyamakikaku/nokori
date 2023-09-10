@@ -53,7 +53,7 @@ type Account @model @auth(rules:[
 ]) {
   id: ID!
   name: String!
-  userId: String! @index(name: "byUserId")
+  userId: String! @index(name: "byUserId", queryField: "listAccountsByUserId")
   organizationId: ID! @index(name: "byOrganizationId")
   createdAt: AWSDateTime!
   organization: Organization @belongsTo
@@ -159,7 +159,7 @@ type OrderPackDetail @model @auth(rules:[
   organization: Organization! @hasOne(fields: ["organizationId"])
 }
 
-type OrganizationJob @model @auth (rules: [{ allow: owner, operations: [create] }]) {
+type OrganizationJob @model @auth (rules: [{ allow: owner, operations: [create, read] }]) {
   id: ID!
   type: OrganizationJobType!
   status: JobStatus!
@@ -167,7 +167,9 @@ type OrganizationJob @model @auth (rules: [{ allow: owner, operations: [create] 
   "type: CREATE"
   createName: String
   createAccountName: String
+  createUserId: ID
+  createId: ID
   "type: JOIN"
   joinCode: String
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

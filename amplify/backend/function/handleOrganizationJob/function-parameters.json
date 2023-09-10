@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "storage": {
+      "Account:@model(appsync)": [
+        "create"
+      ],
+      "AccountRole:@model(appsync)": [
+        "create"
+      ],
+      "Organization:@model(appsync)": [
+        "create"
+      ],
+      "OrganizationJob:@model(appsync)": [
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

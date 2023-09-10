@@ -13,10 +13,16 @@
     },
     "categories": {
       "auth": {
-        "nokori123d8c52": {}
+        "nokoriAuth": {}
       },
       "api": {
         "nokori": {}
+      },
+      "function": {
+        "handleOrganizationJob": {
+          "deploymentBucketName": "amplify-nokori-main-160326-deployment",
+          "s3Key": "amplify-builds/handleOrganizationJob-447358566855486e724f-build.zip"
+        }
       }
     }
   }
