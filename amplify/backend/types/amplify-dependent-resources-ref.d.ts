@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "nokori": {
+    "nokoriApi": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string"
     }
@@ -15,7 +15,14 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "handleOrganizationJob": {
+    "nokoriAuthPreTokenGeneration": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "nokoriHandleOrganizationJob": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

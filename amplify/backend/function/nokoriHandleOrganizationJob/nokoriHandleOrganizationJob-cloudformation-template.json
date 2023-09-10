@@ -16,13 +16,13 @@
     "s3Key": {
       "Type": "String"
     },
-    "apinokoriGraphQLAPIIdOutput": {
+    "apinokoriApiGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apinokoriGraphQLAPIIdOutput"
+      "Default": "apinokoriApiGraphQLAPIIdOutput"
     },
-    "apinokoriGraphQLAPIEndpointOutput": {
+    "apinokoriApiGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apinokoriGraphQLAPIEndpointOutput"
+      "Default": "apinokoriApiGraphQLAPIEndpointOutput"
     }
   },
   "Conditions": {
@@ -55,12 +55,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "handleOrganizationJob",
+            "nokoriHandleOrganizationJob",
             {
               "Fn::Join": [
                 "",
                 [
-                  "handleOrganizationJob",
+                  "nokoriHandleOrganizationJob",
                   "-",
                   {
                     "Ref": "env"
@@ -78,12 +78,12 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "API_NOKORI_ACCOUNTTABLE_NAME": {
+            "API_NOKORIAPI_ACCOUNTTABLE_NAME": {
               "Fn::ImportValue": {
-                "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
+                "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
               }
             },
-            "API_NOKORI_ACCOUNTTABLE_ARN": {
+            "API_NOKORIAPI_ACCOUNTTABLE_ARN": {
               "Fn::Join": [
                 "",
                 [
@@ -98,21 +98,21 @@
                   ":table/",
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
+                      "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
                     }
                   }
                 ]
               ]
             },
-            "API_NOKORI_GRAPHQLAPIIDOUTPUT": {
-              "Ref": "apinokoriGraphQLAPIIdOutput"
+            "API_NOKORIAPI_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apinokoriApiGraphQLAPIIdOutput"
             },
-            "API_NOKORI_ACCOUNTROLETABLE_NAME": {
+            "API_NOKORIAPI_ACCOUNTROLETABLE_NAME": {
               "Fn::ImportValue": {
-                "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
+                "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
               }
             },
-            "API_NOKORI_ACCOUNTROLETABLE_ARN": {
+            "API_NOKORIAPI_ACCOUNTROLETABLE_ARN": {
               "Fn::Join": [
                 "",
                 [
@@ -127,18 +127,18 @@
                   ":table/",
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
+                      "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
                     }
                   }
                 ]
               ]
             },
-            "API_NOKORI_ORGANIZATIONTABLE_NAME": {
+            "API_NOKORIAPI_ORGANIZATIONTABLE_NAME": {
               "Fn::ImportValue": {
-                "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
+                "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
               }
             },
-            "API_NOKORI_ORGANIZATIONTABLE_ARN": {
+            "API_NOKORIAPI_ORGANIZATIONTABLE_ARN": {
               "Fn::Join": [
                 "",
                 [
@@ -153,18 +153,18 @@
                   ":table/",
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
+                      "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
                     }
                   }
                 ]
               ]
             },
-            "API_NOKORI_ORGANIZATIONJOBTABLE_NAME": {
+            "API_NOKORIAPI_ORGANIZATIONJOBTABLE_NAME": {
               "Fn::ImportValue": {
-                "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
+                "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
               }
             },
-            "API_NOKORI_ORGANIZATIONJOBTABLE_ARN": {
+            "API_NOKORIAPI_ORGANIZATIONJOBTABLE_ARN": {
               "Fn::Join": [
                 "",
                 [
@@ -179,7 +179,7 @@
                   ":table/",
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
+                      "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
                     }
                   }
                 ]
@@ -204,12 +204,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "nokoriLambdaRolee83baeeb",
+            "nokoriLambdaRoleccf11d4b",
             {
               "Fn::Join": [
                 "",
                 [
-                  "nokoriLambdaRolee83baeeb",
+                  "nokoriLambdaRoleccf11d4b",
                   "-",
                   {
                     "Ref": "env"
@@ -319,7 +319,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
                         }
                       }
                     ]
@@ -340,7 +340,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountTable:Name"
                         }
                       },
                       "/index/*"
@@ -373,7 +373,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
                         }
                       }
                     ]
@@ -394,7 +394,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:AccountRoleTable:Name"
                         }
                       },
                       "/index/*"
@@ -427,7 +427,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
                         }
                       }
                     ]
@@ -448,7 +448,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationTable:Name"
                         }
                       },
                       "/index/*"
@@ -480,7 +480,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
                         }
                       }
                     ]
@@ -501,7 +501,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
+                          "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:Name"
                         }
                       },
                       "/index/*"
@@ -539,7 +539,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:StreamArn"
+                  "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:StreamArn"
                 }
               }
             }
@@ -558,7 +558,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apinokoriGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:StreamArn"
+            "Fn::Sub": "${apinokoriApiGraphQLAPIIdOutput}:GetAtt:OrganizationJobTable:StreamArn"
           }
         },
         "FunctionName": {

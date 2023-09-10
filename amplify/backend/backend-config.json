@@ -1,6 +1,6 @@
 {
   "api": {
-    "nokori": {
+    "nokoriApi": {
       "dependsOn": [
         {
           "attributes": [
@@ -28,7 +28,17 @@
   "auth": {
     "nokoriAuth": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "nokoriAuthPreTokenGeneration",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -54,7 +64,12 @@
     }
   },
   "function": {
-    "handleOrganizationJob": {
+    "nokoriAuthPreTokenGeneration": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "nokoriHandleOrganizationJob": {
       "build": true,
       "dependsOn": [
         {
@@ -63,14 +78,14 @@
             "GraphQLAPIEndpointOutput"
           ],
           "category": "api",
-          "resourceName": "nokori"
+          "resourceName": "nokoriApi"
         },
         {
           "attributes": [
             "GraphQLAPIIdOutput"
           ],
           "category": "api",
-          "resourceName": "nokori"
+          "resourceName": "nokoriApi"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -78,19 +93,35 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_handleOrganizationJob_deploymentBucketName": {
+    "AMPLIFY_function_nokoriAuthPreTokenGeneration_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "handleOrganizationJob"
+          "resourceName": "nokoriAuthPreTokenGeneration"
         }
       ]
     },
-    "AMPLIFY_function_handleOrganizationJob_s3Key": {
+    "AMPLIFY_function_nokoriAuthPreTokenGeneration_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "handleOrganizationJob"
+          "resourceName": "nokoriAuthPreTokenGeneration"
+        }
+      ]
+    },
+    "AMPLIFY_function_nokoriHandleOrganizationJob_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nokoriHandleOrganizationJob"
+        }
+      ]
+    },
+    "AMPLIFY_function_nokoriHandleOrganizationJob_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nokoriHandleOrganizationJob"
         }
       ]
     }

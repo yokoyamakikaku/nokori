@@ -9,19 +9,24 @@
       "UnauthRoleName": "amplify-nokori-main-160326-unauthRole",
       "StackName": "amplify-nokori-main-160326",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:693825121436:stack/amplify-nokori-main-160326/fd8de960-4a27-11ee-b495-0a4ba3b58dad",
-      "AmplifyAppId": "d37wq5dy4mo8my"
+      "AmplifyAppId": "d37wq5dy4mo8my",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-nokori-main-160326-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
         "nokoriAuth": {}
       },
       "api": {
-        "nokori": {}
+        "nokoriApi": {}
       },
       "function": {
-        "handleOrganizationJob": {
+        "nokoriHandleOrganizationJob": {
           "deploymentBucketName": "amplify-nokori-main-160326-deployment",
-          "s3Key": "amplify-builds/handleOrganizationJob-447358566855486e724f-build.zip"
+          "s3Key": "amplify-builds/nokoriHandleOrganizationJob-2b714269644e2b41384b-build.zip"
+        },
+        "nokoriAuthPreTokenGeneration": {
+          "deploymentBucketName": "amplify-nokori-main-160326-deployment",
+          "s3Key": "amplify-builds/nokoriAuthPreTokenGeneration-366a7678416d6a675775-build.zip"
         }
       }
     }
