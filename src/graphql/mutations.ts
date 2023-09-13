@@ -22,17 +22,14 @@ export const createAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -57,17 +54,14 @@ export const updateAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -92,17 +86,14 @@ export const deleteAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -114,7 +105,7 @@ export const createAccountRole = /* GraphQL */ `
   ) {
     createAccountRole(input: $input, condition: $condition) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -131,13 +122,10 @@ export const createAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -149,7 +137,7 @@ export const updateAccountRole = /* GraphQL */ `
   ) {
     updateAccountRole(input: $input, condition: $condition) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -166,13 +154,10 @@ export const updateAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -184,7 +169,7 @@ export const deleteAccountRole = /* GraphQL */ `
   ) {
     deleteAccountRole(input: $input, condition: $condition) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -201,13 +186,10 @@ export const deleteAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -419,15 +401,6 @@ export const createApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -443,7 +416,15 @@ export const createApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -465,15 +446,6 @@ export const updateApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -489,7 +461,15 @@ export const updateApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -511,15 +491,6 @@ export const deleteApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -535,7 +506,15 @@ export const deleteApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -944,10 +923,12 @@ export const createOrganizationJob = /* GraphQL */ `
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -964,10 +945,12 @@ export const updateOrganizationJob = /* GraphQL */ `
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -984,10 +967,12 @@ export const deleteOrganizationJob = /* GraphQL */ `
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }

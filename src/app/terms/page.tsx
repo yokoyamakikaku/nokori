@@ -1,4 +1,4 @@
-import ViewTerms from './ViewTerms'
+import ViewTerms from './component/ViewTerms'
 
 const TermsPage = () => {
   return (

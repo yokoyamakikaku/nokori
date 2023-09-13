@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   Table,
@@ -8,8 +8,8 @@ import {
   TableCell,
   TableFoot,
   Placeholder
-} from "@aws-amplify/ui-react"
-import { FC, useMemo } from "react"
+} from '@aws-amplify/ui-react'
+import { FC, useMemo } from 'react'
 
 interface BasicTablePlaceholder {
   columnCount?: number

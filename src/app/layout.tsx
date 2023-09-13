@@ -4,7 +4,7 @@ import '@aws-amplify/ui-react/styles.css'
 import '@/styles/globals.css'
 
 import Providers from '@/component/Providers'
-import AppLayout from '@/app/AppLayout'
+import AppLayout from '@/app/component/AppLayout'
 
 export const metadata: Metadata = {
   title      : 'ノコリ',

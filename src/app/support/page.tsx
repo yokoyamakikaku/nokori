@@ -1,4 +1,4 @@
-import ViewSupport from './ViewSupport'
+import ViewSupport from './component/ViewSupport'
 
 const SupportPage = () => {
   return (

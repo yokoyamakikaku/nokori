@@ -1,6 +1,6 @@
-import PageContainer from '@/app/PageContaienr'
-import Breadcrumbs from './Breadcrumbs'
-import DeleteUser from './DeleteUser'
+import PageContainer from '@/app/component/PageContaienr'
+import Breadcrumbs from './component/Breadcrumbs'
+import DeleteUser from './component/DeleteUser'
 
 const DeleteUserPage = () => {
   return (

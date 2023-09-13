@@ -1,5 +1,5 @@
-import Breadcrumbs from './Breadcrumbs'
-import CreatePack from './CreatePacks'
+import Breadcrumbs from './component/Breadcrumbs'
+import CreatePack from './component/CreatePacks'
 
 const NewPackPage = () => {
   return (

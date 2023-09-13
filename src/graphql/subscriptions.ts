@@ -19,17 +19,14 @@ export const onCreateAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -51,17 +48,14 @@ export const onUpdateAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -83,17 +77,14 @@ export const onDeleteAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -104,7 +95,7 @@ export const onCreateAccountRole = /* GraphQL */ `
   ) {
     onCreateAccountRole(filter: $filter) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -121,13 +112,10 @@ export const onCreateAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -138,7 +126,7 @@ export const onUpdateAccountRole = /* GraphQL */ `
   ) {
     onUpdateAccountRole(filter: $filter) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -155,13 +143,10 @@ export const onUpdateAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -172,7 +157,7 @@ export const onDeleteAccountRole = /* GraphQL */ `
   ) {
     onDeleteAccountRole(filter: $filter) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -189,13 +174,10 @@ export const onDeleteAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -394,15 +376,6 @@ export const onCreateApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -418,7 +391,15 @@ export const onCreateApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -439,15 +420,6 @@ export const onUpdateApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -463,7 +435,15 @@ export const onUpdateApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -484,15 +464,6 @@ export const onDeleteApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -508,7 +479,15 @@ export const onDeleteApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -893,18 +872,21 @@ export const onDeleteOrderPackDetail = /* GraphQL */ `
 export const onCreateOrganizationJob = /* GraphQL */ `
   subscription OnCreateOrganizationJob(
     $filter: ModelSubscriptionOrganizationJobFilterInput
+    $owner: String
   ) {
-    onCreateOrganizationJob(filter: $filter) {
+    onCreateOrganizationJob(filter: $filter, owner: $owner) {
       id
       type
       status
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -912,18 +894,21 @@ export const onCreateOrganizationJob = /* GraphQL */ `
 export const onUpdateOrganizationJob = /* GraphQL */ `
   subscription OnUpdateOrganizationJob(
     $filter: ModelSubscriptionOrganizationJobFilterInput
+    $owner: String
   ) {
-    onUpdateOrganizationJob(filter: $filter) {
+    onUpdateOrganizationJob(filter: $filter, owner: $owner) {
       id
       type
       status
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -931,18 +916,21 @@ export const onUpdateOrganizationJob = /* GraphQL */ `
 export const onDeleteOrganizationJob = /* GraphQL */ `
   subscription OnDeleteOrganizationJob(
     $filter: ModelSubscriptionOrganizationJobFilterInput
+    $owner: String
   ) {
-    onDeleteOrganizationJob(filter: $filter) {
+    onDeleteOrganizationJob(filter: $filter, owner: $owner) {
       id
       type
       status
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }

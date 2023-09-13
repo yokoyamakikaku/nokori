@@ -3,11 +3,13 @@ import Link from 'next/link'
 import { FiArrowRight } from 'react-icons/fi'
 import { Flex, Button, Divider, useTheme, Heading } from '@aws-amplify/ui-react'
 
+export interface ListMenuItem {
+  label: ReactNode
+  href: string
+}
+
 export interface ListMenuProps {
-  items: {
-    label: ReactNode
-    href: string
-  }[]
+  items: ListMenuItem[]
 }
 
 const ListMenu: FC<ListMenuProps> = ({ items }) => {

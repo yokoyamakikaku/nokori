@@ -27,7 +27,7 @@ export default function JoinOrganization () {
           <TextField
             label={I18n.get('organization.code')}
             required type="text" min={4}
-            descriptiveText={I18n.get('organization.code.description.onJoinOrgnization')}
+            descriptiveText={I18n.get('organization.code.description.onJoinorganization')}
             placeholder={I18n.get('organization.code.placeholder')}
             {...form.register('name')} />
           <View>

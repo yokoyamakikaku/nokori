@@ -19,17 +19,14 @@ export const getAccount = /* GraphQL */ `
       }
       role {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       updatedAt
-      accountRoleId
       __typename
     }
   }
@@ -48,7 +45,6 @@ export const listAccounts = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       nextToken
@@ -60,7 +56,7 @@ export const getAccountRole = /* GraphQL */ `
   query GetAccountRole($id: ID!) {
     getAccountRole(id: $id) {
       id
-      role
+      type
       accountId
       organizationId
       organization {
@@ -77,13 +73,10 @@ export const getAccountRole = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       createdAt
       updatedAt
-      accountRoleOrganizationId
-      accountRoleAccountId
       __typename
     }
   }
@@ -97,13 +90,11 @@ export const listAccountRoles = /* GraphQL */ `
     listAccountRoles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       nextToken
@@ -222,15 +213,6 @@ export const getApplication = /* GraphQL */ `
       id
       organizationId
       applicantId
-      order {
-        id
-        status
-        organizationId
-        applicationId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       organization {
         id
@@ -246,7 +228,15 @@ export const getApplication = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      order {
+        id
+        status
+        organizationId
+        applicationId
+        createdAt
+        updatedAt
         __typename
       }
       packDetails {
@@ -479,10 +469,12 @@ export const getOrganizationJob = /* GraphQL */ `
       errorMessage
       createName
       createAccountName
+      createUserId
+      createId
       joinCode
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -505,10 +497,12 @@ export const listOrganizationJobs = /* GraphQL */ `
         errorMessage
         createName
         createAccountName
+        createUserId
+        createId
         joinCode
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       nextToken
@@ -516,15 +510,15 @@ export const listOrganizationJobs = /* GraphQL */ `
     }
   }
 `;
-export const accountsByUserId = /* GraphQL */ `
-  query AccountsByUserId(
+export const listAccountsByUserId = /* GraphQL */ `
+  query ListAccountsByUserId(
     $userId: String!
     $sortDirection: ModelSortDirection
     $filter: ModelAccountFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    accountsByUserId(
+    listAccountsByUserId(
       userId: $userId
       sortDirection: $sortDirection
       filter: $filter
@@ -538,7 +532,6 @@ export const accountsByUserId = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
         __typename
       }
       nextToken
@@ -546,15 +539,17 @@ export const accountsByUserId = /* GraphQL */ `
     }
   }
 `;
-export const accountsByOrganizationId = /* GraphQL */ `
-  query AccountsByOrganizationId(
-    $organizationId: ID!
+export const listAccountsByUserIdAndOrganizationId = /* GraphQL */ `
+  query ListAccountsByUserIdAndOrganizationId(
+    $userId: String!
+    $organizationId: ModelIDKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelAccountFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    accountsByOrganizationId(
+    listAccountsByUserIdAndOrganizationId(
+      userId: $userId
       organizationId: $organizationId
       sortDirection: $sortDirection
       filter: $filter
@@ -568,7 +563,35 @@ export const accountsByOrganizationId = /* GraphQL */ `
         organizationId
         createdAt
         updatedAt
-        accountRoleId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const listAccountsByOrganizationId = /* GraphQL */ `
+  query ListAccountsByOrganizationId(
+    $organizationId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelAccountFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccountsByOrganizationId(
+      organizationId: $organizationId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        userId
+        organizationId
+        createdAt
+        updatedAt
         __typename
       }
       nextToken
@@ -593,13 +616,42 @@ export const accountRolesByAccountId = /* GraphQL */ `
     ) {
       items {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const accountRolesByAccountIdAndOrganizationId = /* GraphQL */ `
+  query AccountRolesByAccountIdAndOrganizationId(
+    $accountId: ID!
+    $organizationId: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAccountRoleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    accountRolesByAccountIdAndOrganizationId(
+      accountId: $accountId
+      organizationId: $organizationId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        accountId
+        organizationId
+        createdAt
+        updatedAt
         __typename
       }
       nextToken
@@ -624,13 +676,11 @@ export const accountRolesByOrganizationId = /* GraphQL */ `
     ) {
       items {
         id
-        role
+        type
         accountId
         organizationId
         createdAt
         updatedAt
-        accountRoleOrganizationId
-        accountRoleAccountId
         __typename
       }
       nextToken

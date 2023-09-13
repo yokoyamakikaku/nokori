@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import '@aws-amplify/ui-react/styles.css'
-import OrganizationLayout from './OrganizationLayout'
+import OrganizationLayout from './component/OrganizationLayout'
 
 export default function RootLayout({
   children

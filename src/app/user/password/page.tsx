@@ -1,6 +1,6 @@
-import PageContainer from '@/app/PageContaienr'
-import Breadcrumbs from './Breadcrumbs'
-import UpdatePassword from './UpdatePassword'
+import PageContainer from '@/app/component/PageContaienr'
+import Breadcrumbs from './component/Breadcrumbs'
+import UpdatePassword from './component/UpdatePassword'
 
 const PasswordSettingPage = () => {
   return (

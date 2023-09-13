@@ -8,7 +8,6 @@ export type CreateAccountInput = {
   userId: string,
   organizationId: string,
   createdAt?: string | null,
-  accountRoleId: string,
 };
 
 export type ModelAccountConditionInput = {
@@ -19,7 +18,6 @@ export type ModelAccountConditionInput = {
   and?: Array< ModelAccountConditionInput | null > | null,
   or?: Array< ModelAccountConditionInput | null > | null,
   not?: ModelAccountConditionInput | null,
-  accountRoleId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -88,7 +86,6 @@ export type Account = {
   organization?: Organization | null,
   role: AccountRole,
   updatedAt: string,
-  accountRoleId: string,
 };
 
 export type Organization = {
@@ -187,10 +184,10 @@ export type Application = {
   id: string,
   organizationId: string,
   applicantId: string,
-  order?: Order | null,
   createdAt: string,
   organization: Organization,
   applicant: Account,
+  order?: Order | null,
   packDetails?: ModelApplicationPackDetailConnection | null,
   updatedAt: string,
   applicationOrderId?: string | null,
@@ -249,15 +246,13 @@ export type ModelOrderConnection = {
 export type AccountRole = {
   __typename: "AccountRole",
   id: string,
-  role: RoleType,
+  type: RoleType,
   accountId: string,
   organizationId: string,
   organization: Organization,
   account: Account,
   createdAt: string,
   updatedAt: string,
-  accountRoleOrganizationId: string,
-  accountRoleAccountId: string,
 };
 
 export enum RoleType {
@@ -272,7 +267,6 @@ export type UpdateAccountInput = {
   userId?: string | null,
   organizationId?: string | null,
   createdAt?: string | null,
-  accountRoleId?: string | null,
 };
 
 export type DeleteAccountInput = {
@@ -281,22 +275,18 @@ export type DeleteAccountInput = {
 
 export type CreateAccountRoleInput = {
   id?: string | null,
-  role: RoleType,
+  type: RoleType,
   accountId: string,
   organizationId: string,
-  accountRoleOrganizationId: string,
-  accountRoleAccountId: string,
 };
 
 export type ModelAccountRoleConditionInput = {
-  role?: ModelRoleTypeInput | null,
+  type?: ModelRoleTypeInput | null,
   accountId?: ModelIDInput | null,
   organizationId?: ModelIDInput | null,
   and?: Array< ModelAccountRoleConditionInput | null > | null,
   or?: Array< ModelAccountRoleConditionInput | null > | null,
   not?: ModelAccountRoleConditionInput | null,
-  accountRoleOrganizationId?: ModelIDInput | null,
-  accountRoleAccountId?: ModelIDInput | null,
 };
 
 export type ModelRoleTypeInput = {
@@ -306,11 +296,9 @@ export type ModelRoleTypeInput = {
 
 export type UpdateAccountRoleInput = {
   id: string,
-  role?: RoleType | null,
+  type?: RoleType | null,
   accountId?: string | null,
   organizationId?: string | null,
-  accountRoleOrganizationId?: string | null,
-  accountRoleAccountId?: string | null,
 };
 
 export type DeleteAccountRoleInput = {
@@ -547,7 +535,10 @@ export type CreateOrganizationJobInput = {
   errorMessage?: string | null,
   createName?: string | null,
   createAccountName?: string | null,
+  createUserId?: string | null,
+  createId?: string | null,
   joinCode?: string | null,
+  owner?: string | null,
 };
 
 export enum OrganizationJobType {
@@ -571,7 +562,10 @@ export type ModelOrganizationJobConditionInput = {
   errorMessage?: ModelStringInput | null,
   createName?: ModelStringInput | null,
   createAccountName?: ModelStringInput | null,
+  createUserId?: ModelIDInput | null,
+  createId?: ModelIDInput | null,
   joinCode?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelOrganizationJobConditionInput | null > | null,
   or?: Array< ModelOrganizationJobConditionInput | null > | null,
   not?: ModelOrganizationJobConditionInput | null,
@@ -595,10 +589,12 @@ export type OrganizationJob = {
   errorMessage?: string | null,
   createName?: string | null,
   createAccountName?: string | null,
+  createUserId?: string | null,
+  createId?: string | null,
   joinCode?: string | null,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export type UpdateOrganizationJobInput = {
@@ -608,7 +604,10 @@ export type UpdateOrganizationJobInput = {
   errorMessage?: string | null,
   createName?: string | null,
   createAccountName?: string | null,
+  createUserId?: string | null,
+  createId?: string | null,
   joinCode?: string | null,
+  owner?: string | null,
 };
 
 export type DeleteOrganizationJobInput = {
@@ -624,19 +623,16 @@ export type ModelAccountFilterInput = {
   and?: Array< ModelAccountFilterInput | null > | null,
   or?: Array< ModelAccountFilterInput | null > | null,
   not?: ModelAccountFilterInput | null,
-  accountRoleId?: ModelIDInput | null,
 };
 
 export type ModelAccountRoleFilterInput = {
   id?: ModelIDInput | null,
-  role?: ModelRoleTypeInput | null,
+  type?: ModelRoleTypeInput | null,
   accountId?: ModelIDInput | null,
   organizationId?: ModelIDInput | null,
   and?: Array< ModelAccountRoleFilterInput | null > | null,
   or?: Array< ModelAccountRoleFilterInput | null > | null,
   not?: ModelAccountRoleFilterInput | null,
-  accountRoleOrganizationId?: ModelIDInput | null,
-  accountRoleAccountId?: ModelIDInput | null,
 };
 
 export type ModelAccountRoleConnection = {
@@ -726,7 +722,10 @@ export type ModelOrganizationJobFilterInput = {
   errorMessage?: ModelStringInput | null,
   createName?: ModelStringInput | null,
   createAccountName?: ModelStringInput | null,
+  createUserId?: ModelIDInput | null,
+  createId?: ModelIDInput | null,
   joinCode?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelOrganizationJobFilterInput | null > | null,
   or?: Array< ModelOrganizationJobFilterInput | null > | null,
   not?: ModelOrganizationJobFilterInput | null,
@@ -744,6 +743,16 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelIDKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -758,7 +767,6 @@ export type ModelSubscriptionAccountFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   userId?: ModelSubscriptionStringInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionAccountFilterInput | null > | null,
   or?: Array< ModelSubscriptionAccountFilterInput | null > | null,
@@ -796,15 +804,13 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionAccountRoleFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  role?: ModelSubscriptionStringInput | null,
+  type?: ModelSubscriptionStringInput | null,
   accountId?: ModelSubscriptionIDInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionAccountRoleFilterInput | null > | null,
   or?: Array< ModelSubscriptionAccountRoleFilterInput | null > | null,
 };
 
 export type ModelSubscriptionOrganizationFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrganizationFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrganizationFilterInput | null > | null,
@@ -820,7 +826,6 @@ export type ModelSubscriptionPackFilterInput = {
   status?: ModelSubscriptionStringInput | null,
   expiredAt?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionPackFilterInput | null > | null,
   or?: Array< ModelSubscriptionPackFilterInput | null > | null,
 };
@@ -839,7 +844,6 @@ export type ModelSubscriptionIntInput = {
 
 export type ModelSubscriptionApplicationFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   applicantId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionApplicationFilterInput | null > | null,
@@ -849,7 +853,6 @@ export type ModelSubscriptionApplicationFilterInput = {
 export type ModelSubscriptionApplicationPackDetailFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   applicationId?: ModelSubscriptionIDInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   packId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionApplicationPackDetailFilterInput | null > | null,
@@ -859,7 +862,6 @@ export type ModelSubscriptionApplicationPackDetailFilterInput = {
 export type ModelSubscriptionOrderFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   status?: ModelSubscriptionStringInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   applicationId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
@@ -870,7 +872,6 @@ export type ModelSubscriptionOrderPackDetailFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   orderId?: ModelSubscriptionIDInput | null,
   packId?: ModelSubscriptionIDInput | null,
-  organizationId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderPackDetailFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderPackDetailFilterInput | null > | null,
@@ -883,6 +884,8 @@ export type ModelSubscriptionOrganizationJobFilterInput = {
   errorMessage?: ModelSubscriptionStringInput | null,
   createName?: ModelSubscriptionStringInput | null,
   createAccountName?: ModelSubscriptionStringInput | null,
+  createUserId?: ModelSubscriptionIDInput | null,
+  createId?: ModelSubscriptionIDInput | null,
   joinCode?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrganizationJobFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrganizationJobFilterInput | null > | null,
@@ -911,16 +914,13 @@ export type CreateAccountMutation = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -947,16 +947,13 @@ export type UpdateAccountMutation = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -983,16 +980,13 @@ export type DeleteAccountMutation = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -1005,7 +999,7 @@ export type CreateAccountRoleMutation = {
   createAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -1023,12 +1017,9 @@ export type CreateAccountRoleMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -1041,7 +1032,7 @@ export type UpdateAccountRoleMutation = {
   updateAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -1059,12 +1050,9 @@ export type UpdateAccountRoleMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -1077,7 +1065,7 @@ export type DeleteAccountRoleMutation = {
   deleteAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -1095,12 +1083,9 @@ export type DeleteAccountRoleMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -1319,15 +1304,6 @@ export type CreateApplicationMutation = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -1344,8 +1320,16 @@ export type CreateApplicationMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -1366,15 +1350,6 @@ export type UpdateApplicationMutation = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -1391,8 +1366,16 @@ export type UpdateApplicationMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -1413,15 +1396,6 @@ export type DeleteApplicationMutation = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -1438,8 +1412,16 @@ export type DeleteApplicationMutation = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -1856,10 +1838,12 @@ export type CreateOrganizationJobMutation = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -1877,10 +1861,12 @@ export type UpdateOrganizationJobMutation = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -1898,10 +1884,12 @@ export type DeleteOrganizationJobMutation = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -1927,16 +1915,13 @@ export type GetAccountQuery = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -1957,7 +1942,6 @@ export type ListAccountsQuery = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1971,7 +1955,7 @@ export type GetAccountRoleQuery = {
   getAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -1989,12 +1973,9 @@ export type GetAccountRoleQuery = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -2010,13 +1991,11 @@ export type ListAccountRolesQuery = {
     items:  Array< {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2145,15 +2124,6 @@ export type GetApplicationQuery = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -2170,8 +2140,16 @@ export type GetApplicationQuery = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -2410,10 +2388,12 @@ export type GetOrganizationJobQuery = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -2434,16 +2414,18 @@ export type ListOrganizationJobsQuery = {
       errorMessage?: string | null,
       createName?: string | null,
       createAccountName?: string | null,
+      createUserId?: string | null,
+      createId?: string | null,
       joinCode?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type AccountsByUserIdQueryVariables = {
+export type ListAccountsByUserIdQueryVariables = {
   userId: string,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelAccountFilterInput | null,
@@ -2451,8 +2433,8 @@ export type AccountsByUserIdQueryVariables = {
   nextToken?: string | null,
 };
 
-export type AccountsByUserIdQuery = {
-  accountsByUserId?:  {
+export type ListAccountsByUserIdQuery = {
+  listAccountsByUserId?:  {
     __typename: "ModelAccountConnection",
     items:  Array< {
       __typename: "Account",
@@ -2462,13 +2444,37 @@ export type AccountsByUserIdQuery = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type AccountsByOrganizationIdQueryVariables = {
+export type ListAccountsByUserIdAndOrganizationIdQueryVariables = {
+  userId: string,
+  organizationId?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAccountFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListAccountsByUserIdAndOrganizationIdQuery = {
+  listAccountsByUserIdAndOrganizationId?:  {
+    __typename: "ModelAccountConnection",
+    items:  Array< {
+      __typename: "Account",
+      id: string,
+      name: string,
+      userId: string,
+      organizationId: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListAccountsByOrganizationIdQueryVariables = {
   organizationId: string,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelAccountFilterInput | null,
@@ -2476,8 +2482,8 @@ export type AccountsByOrganizationIdQueryVariables = {
   nextToken?: string | null,
 };
 
-export type AccountsByOrganizationIdQuery = {
-  accountsByOrganizationId?:  {
+export type ListAccountsByOrganizationIdQuery = {
+  listAccountsByOrganizationId?:  {
     __typename: "ModelAccountConnection",
     items:  Array< {
       __typename: "Account",
@@ -2487,7 +2493,6 @@ export type AccountsByOrganizationIdQuery = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2507,13 +2512,36 @@ export type AccountRolesByAccountIdQuery = {
     items:  Array< {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type AccountRolesByAccountIdAndOrganizationIdQueryVariables = {
+  accountId: string,
+  organizationId?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAccountRoleFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type AccountRolesByAccountIdAndOrganizationIdQuery = {
+  accountRolesByAccountIdAndOrganizationId?:  {
+    __typename: "ModelAccountRoleConnection",
+    items:  Array< {
+      __typename: "AccountRole",
+      id: string,
+      type: RoleType,
+      accountId: string,
+      organizationId: string,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2533,13 +2561,11 @@ export type AccountRolesByOrganizationIdQuery = {
     items:  Array< {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2841,16 +2867,13 @@ export type OnCreateAccountSubscription = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -2876,16 +2899,13 @@ export type OnUpdateAccountSubscription = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -2911,16 +2931,13 @@ export type OnDeleteAccountSubscription = {
     role:  {
       __typename: "AccountRole",
       id: string,
-      role: RoleType,
+      type: RoleType,
       accountId: string,
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleOrganizationId: string,
-      accountRoleAccountId: string,
     },
     updatedAt: string,
-    accountRoleId: string,
   } | null,
 };
 
@@ -2932,7 +2949,7 @@ export type OnCreateAccountRoleSubscription = {
   onCreateAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -2950,12 +2967,9 @@ export type OnCreateAccountRoleSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -2967,7 +2981,7 @@ export type OnUpdateAccountRoleSubscription = {
   onUpdateAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -2985,12 +2999,9 @@ export type OnUpdateAccountRoleSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -3002,7 +3013,7 @@ export type OnDeleteAccountRoleSubscription = {
   onDeleteAccountRole?:  {
     __typename: "AccountRole",
     id: string,
-    role: RoleType,
+    type: RoleType,
     accountId: string,
     organizationId: string,
     organization:  {
@@ -3020,12 +3031,9 @@ export type OnDeleteAccountRoleSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
     createdAt: string,
     updatedAt: string,
-    accountRoleOrganizationId: string,
-    accountRoleAccountId: string,
   } | null,
 };
 
@@ -3237,15 +3245,6 @@ export type OnCreateApplicationSubscription = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -3262,8 +3261,16 @@ export type OnCreateApplicationSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -3283,15 +3290,6 @@ export type OnUpdateApplicationSubscription = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -3308,8 +3306,16 @@ export type OnUpdateApplicationSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -3329,15 +3335,6 @@ export type OnDeleteApplicationSubscription = {
     id: string,
     organizationId: string,
     applicantId: string,
-    order?:  {
-      __typename: "Order",
-      id: string,
-      status: OrderStatus,
-      organizationId: string,
-      applicationId?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     createdAt: string,
     organization:  {
       __typename: "Organization",
@@ -3354,8 +3351,16 @@ export type OnDeleteApplicationSubscription = {
       organizationId: string,
       createdAt: string,
       updatedAt: string,
-      accountRoleId: string,
     },
+    order?:  {
+      __typename: "Order",
+      id: string,
+      status: OrderStatus,
+      organizationId: string,
+      applicationId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     packDetails?:  {
       __typename: "ModelApplicationPackDetailConnection",
       nextToken?: string | null,
@@ -3751,6 +3756,7 @@ export type OnDeleteOrderPackDetailSubscription = {
 
 export type OnCreateOrganizationJobSubscriptionVariables = {
   filter?: ModelSubscriptionOrganizationJobFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateOrganizationJobSubscription = {
@@ -3762,15 +3768,18 @@ export type OnCreateOrganizationJobSubscription = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateOrganizationJobSubscriptionVariables = {
   filter?: ModelSubscriptionOrganizationJobFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateOrganizationJobSubscription = {
@@ -3782,15 +3791,18 @@ export type OnUpdateOrganizationJobSubscription = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteOrganizationJobSubscriptionVariables = {
   filter?: ModelSubscriptionOrganizationJobFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteOrganizationJobSubscription = {
@@ -3802,9 +3814,11 @@ export type OnDeleteOrganizationJobSubscription = {
     errorMessage?: string | null,
     createName?: string | null,
     createAccountName?: string | null,
+    createUserId?: string | null,
+    createId?: string | null,
     joinCode?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };

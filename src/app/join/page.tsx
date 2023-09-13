@@ -1,4 +1,4 @@
-import PageContainer from '../PageContaienr'
+import PageContainer from '../[organizationId]/PageContaienr'
 import Breadcrumbs from './Breadcrumbs'
 import JoinOrganization from './JoinOrganization'
 

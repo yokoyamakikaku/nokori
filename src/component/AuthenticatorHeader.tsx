@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { View, Heading, useTheme, Text } from '@aws-amplify/ui-react'
 

@@ -1,5 +1,5 @@
-import PageContainer from './PageContaienr'
-import ViewOrganizations from './ViewOrganizations'
+import PageContainer from '@/app/component/PageContaienr'
+import ViewOrganizations from './component/ViewOrganizations'
 
 const HomePage = () => {
   return (

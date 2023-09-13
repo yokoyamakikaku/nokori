@@ -9,7 +9,8 @@ export default function Breadcrumbs () {
       href : '/',
       label: I18n.get('home')
     }, {
-      label: I18n.get('organization.join')
+      isCurrent: true,
+      label    : I18n.get('organization.join')
     }]} />
   )
 }

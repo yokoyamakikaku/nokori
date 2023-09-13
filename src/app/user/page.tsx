@@ -1,7 +1,7 @@
-import PageContainer from '../PageContaienr'
-import Breadcrumbs from './Breadcrumbs'
-import ViewUser from './ViewUser'
-import ViewUserMenu from './ViewUserMenu'
+import PageContainer from '@/app/component/PageContaienr'
+import Breadcrumbs from './component/Breadcrumbs'
+import ViewUser from './component/ViewUser'
+import ViewUserMenu from './component/ViewUserMenu'
 
 const UserPage = () => {
   return (

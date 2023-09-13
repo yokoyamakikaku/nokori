@@ -1,4 +1,4 @@
-import * as api from "@/API";
+import * as api from '@/API'
 
 export type Pack = Pick<api.Pack, 'id' | 'name' | 'status' | 'aboSystem' | 'rhFactor' | 'type' | 'quantity' | 'createdAt' | 'expiredAt'>
 

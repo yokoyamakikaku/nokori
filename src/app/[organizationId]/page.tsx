@@ -1,4 +1,4 @@
-import ViewFeaturedPacks from './ViewFeaturedPacks'
+import ViewFeaturedPacks from './component/ViewFeaturedPacks'
 
 export default function HomePage () {
   return (
