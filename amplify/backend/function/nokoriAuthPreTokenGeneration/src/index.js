@@ -1,4 +1,14 @@
-/**
+/* Amplify Params - DO NOT EDIT
+	API_NOKORIAPI_ACCOUNTROLETABLE_ARN
+	API_NOKORIAPI_ACCOUNTROLETABLE_NAME
+	API_NOKORIAPI_ACCOUNTTABLE_ARN
+	API_NOKORIAPI_ACCOUNTTABLE_NAME
+	API_NOKORIAPI_GRAPHQLAPIIDOUTPUT
+	API_NOKORIAPI_ORGANIZATIONTABLE_ARN
+	API_NOKORIAPI_ORGANIZATIONTABLE_NAME
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT *//**
  * @fileoverview
  *
  * This CloudFormation Trigger creates a handler which awaits the other handlers
@@ -9,11 +19,11 @@
  * The names of modules to load are stored as a comma-delimited string in the
  * `MODULES` env var.
  */
-const moduleNames = process.env.MODULES.split(',');
+const moduleNames = process.env.MODULES.split(',')
 /**
  * The array of imported modules.
  */
-const modules = moduleNames.map((name) => require(`./${name}`));
+const modules = moduleNames.map((name) => require(`./${name}`))
 
 /**
  * This async handler iterates over the given modules and awaits them.
@@ -28,6 +38,6 @@ exports.handler = async (event, context) => {
    * `await Promise.all(...)`. This would otherwise just be determined by the
    * order of names in the `MODULES` var.
    */
-  await Promise.all(modules.map((module) => module.handler(event, context)));
-  return event;
-};
+  await Promise.all(modules.map((module) => module.handler(event, context)))
+  return event
+}

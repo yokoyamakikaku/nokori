@@ -16,18 +16,18 @@
       "auth": {
         "nokoriAuth": {}
       },
-      "api": {
-        "nokoriApi": {}
-      },
       "function": {
         "nokoriHandleOrganizationJob": {
           "deploymentBucketName": "amplify-nokori-main-160326-deployment",
-          "s3Key": "amplify-builds/nokoriHandleOrganizationJob-2b714269644e2b41384b-build.zip"
+          "s3Key": "amplify-builds/nokoriHandleOrganizationJob-7752497663786f6b2f65-build.zip"
         },
         "nokoriAuthPreTokenGeneration": {
           "deploymentBucketName": "amplify-nokori-main-160326-deployment",
-          "s3Key": "amplify-builds/nokoriAuthPreTokenGeneration-366a7678416d6a675775-build.zip"
+          "s3Key": "amplify-builds/nokoriAuthPreTokenGeneration-7339573635426e727364-build.zip"
         }
+      },
+      "api": {
+        "nokoriApi": {}
       }
     }
   }

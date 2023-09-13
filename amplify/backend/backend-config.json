@@ -66,6 +66,15 @@
   "function": {
     "nokoriAuthPreTokenGeneration": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "nokoriApi"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },

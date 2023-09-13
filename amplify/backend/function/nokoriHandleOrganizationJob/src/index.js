@@ -1,13 +1,13 @@
 /* Amplify Params - DO NOT EDIT
-	API_NOKORI_ACCOUNTROLETABLE_ARN
-	API_NOKORI_ACCOUNTROLETABLE_NAME
-	API_NOKORI_ACCOUNTTABLE_ARN
-	API_NOKORI_ACCOUNTTABLE_NAME
-	API_NOKORI_GRAPHQLAPIIDOUTPUT
-	API_NOKORI_ORGANIZATIONJOBTABLE_ARN
-	API_NOKORI_ORGANIZATIONJOBTABLE_NAME
-	API_NOKORI_ORGANIZATIONTABLE_ARN
-	API_NOKORI_ORGANIZATIONTABLE_NAME
+	API_NOKORIAPI_ACCOUNTROLETABLE_ARN
+	API_NOKORIAPI_ACCOUNTROLETABLE_NAME
+	API_NOKORIAPI_ACCOUNTTABLE_ARN
+	API_NOKORIAPI_ACCOUNTTABLE_NAME
+	API_NOKORIAPI_GRAPHQLAPIIDOUTPUT
+	API_NOKORIAPI_ORGANIZATIONJOBTABLE_ARN
+	API_NOKORIAPI_ORGANIZATIONJOBTABLE_NAME
+	API_NOKORIAPI_ORGANIZATIONTABLE_ARN
+	API_NOKORIAPI_ORGANIZATIONTABLE_NAME
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -20,8 +20,6 @@ const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb')
  * @type {import('@types/aws-lambda').DynamoDBStreamHandler}
  */
 exports.handler = async (event) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`)
-
   for (const record of event.Records) {
     if (record.eventName !== 'INSERT') continue
     const dynamoDB = new DynamoDB({})
@@ -32,10 +30,9 @@ exports.handler = async (event) => {
       if (typeof createAccountName !== 'string') throw Error('InvalidJob: createAccountName is not string')
       if (typeof createUserId !== 'string') throw Error('InvalidJob: createUserId is not string')
       if (typeof owner !== 'string') throw Error('InvalidJob: owner is not string')
-      console.log({ createUserId, owner })
 
       await dynamoDB.updateItem({
-        TableName                : process.env.API_NOKORI_ORGANIZATIONJOBTABLE_NAME,
+        TableName                : process.env.API_NOKORIAPI_ORGANIZATIONJOBTABLE_NAME,
         Key                      : marshall({ id }),
         UpdateExpression         : 'SET #status=:status',
         ExpressionAttributeNames : { '#status': 'status' },
@@ -43,11 +40,11 @@ exports.handler = async (event) => {
       })
 
       // NOTE: 組織の作成
-      const orgnizationId = uuid()
+      const organizationId = uuid()
       await dynamoDB.putItem({
-        TableName: process.env.API_NOKORI_ORGANIZATIONTABLE_NAME,
+        TableName: process.env.API_NOKORIAPI_ORGANIZATIONTABLE_NAME,
         Item     : marshall({
-          id       : orgnizationId,
+          id       : organizationId,
           name     : createName,
           createdAt: new Date().toISOString(),
           udpatedAt: new Date().toISOString(),
@@ -58,12 +55,12 @@ exports.handler = async (event) => {
       // NOTE: アカウントの作成
       const accountId = uuid()
       await dynamoDB.putItem({
-        TableName: process.env.API_NOKORI_ACCOUNTTABLE_NAME,
+        TableName: process.env.API_NOKORIAPI_ACCOUNTTABLE_NAME,
         Item     : marshall({
           id            : accountId,
           name          : createAccountName,
           userId        : createUserId,
-          organizationId: orgnizationId,
+          organizationId: organizationId,
           createdAt     : new Date().toISOString(),
           udpatedAt     : new Date().toISOString(),
         })
@@ -73,12 +70,12 @@ exports.handler = async (event) => {
       // NOTE: 権限の作成
       const accountRoleId = uuid()
       await dynamoDB.putItem({
-        TableName: process.env.API_NOKORI_ACCOUNTROLETABLE_NAME,
+        TableName: process.env.API_NOKORIAPI_ACCOUNTROLETABLE_NAME,
         Item     : marshall({
           id            : accountRoleId,
           accountId     : accountId,
-          organizationId: orgnizationId,
-          role          : 'MANAGER',
+          organizationId: organizationId,
+          type          : 'MANAGER',
           createdAt     : new Date().toISOString(),
           udpatedAt     : new Date().toISOString(),
         })
@@ -87,7 +84,7 @@ exports.handler = async (event) => {
 
       // NOTE: ジョブの更新
       await dynamoDB.updateItem({
-        TableName               : process.env.API_NOKORI_ORGANIZATIONJOBTABLE_NAME,
+        TableName               : process.env.API_NOKORIAPI_ORGANIZATIONJOBTABLE_NAME,
         Key                     : marshall({ id }),
         UpdateExpression        : 'SET #status=:status, #createId=:createId, #updatedAt=:updatedAt',
         ExpressionAttributeNames: {
@@ -97,7 +94,7 @@ exports.handler = async (event) => {
         },
         ExpressionAttributeValues: marshall({
           ':status'   : 'FINISHED',
-          ':createId' : orgnizationId,
+          ':createId' : organizationId,
           ':updatedAt': new Date().toISOString()
         }),
       })
@@ -106,7 +103,7 @@ exports.handler = async (event) => {
     } catch (error) {
       console.error(error)
       await dynamoDB.updateItem({
-        TableName               : process.env.API_NOKORI_ORGANIZATIONJOBTABLE_NAME,
+        TableName               : process.env.API_NOKORIAPI_ORGANIZATIONJOBTABLE_NAME,
         Key                     : marshall({ id }),
         UpdateExpression        : 'SET #status=:status, #errorMessage=:errorMessage, #updatedAt=:updatedAt',
         ExpressionAttributeNames: {

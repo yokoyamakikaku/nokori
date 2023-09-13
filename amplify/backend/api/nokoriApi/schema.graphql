@@ -48,33 +48,37 @@ enum JobStatus {
 }
 
 type Account @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   name: String!
-  userId: String! @index(name: "byUserId", queryField: "listAccountsByUserId")
-  organizationId: ID! @index(name: "byOrganizationId")
+  userId: String!
+    @index(name: "byUserId", queryField: "listAccountsByUserId")
+    @index(name: "byUserIdAndOrganizationId", queryField: "listAccountsByUserIdAndOrganizationId", sortKeyFields: ["organizationId"])
+  organizationId: ID! @index(name: "byOrganizationId", queryField: "listAccountsByOrganizationId")
   createdAt: AWSDateTime!
-  organization: Organization @belongsTo
-  role: AccountRole! @hasOne
+  organization: Organization @hasOne(fields: ["organizationId"])
+  role: AccountRole! @belongsTo(fields: ["id"])
 }
 
 type AccountRole @model @auth(rules: [
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
-  role: RoleType!
-  accountId: ID! @index(name: "byAccountId")
+  type: RoleType!
+  accountId: ID!
+    @index(name: "byAccountId")
+    @index(name: "byAccountIdAndOrganizationId", sortKeyFields: ["organizationId"])
   organizationId: ID! @index(name: "byOrganizationId")
-  organization: Organization! @hasOne
-  account: Account! @hasOne
+  organization: Organization! @hasOne(fields: ["organizationId"])
+  account: Account! @hasOne(fields: ["accountId"])
 }
 
 type Organization @model @auth(rules: [
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "id", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "id", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   name: String!
@@ -85,8 +89,8 @@ type Organization @model @auth(rules: [
 }
 
 type Pack @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   name: String
@@ -104,22 +108,22 @@ type Pack @model @auth(rules:[
 }
 
 type Application @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
   applicantId: ID! @index(name: "byApplicantId")
-  order: Order @belongsTo
   createdAt: AWSDateTime!
   organization: Organization! @hasOne(fields: ["organizationId"])
   applicant: Account! @hasOne (fields: ["applicantId"])
+  order: Order @belongsTo
   packDetails: [ApplicationPackDetail!] @hasMany(indexName: "byApplicationId", fields: ["id"])
 }
 
 type ApplicationPackDetail @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   applicationId: ID! @index(name: "byApplicationId")
@@ -132,8 +136,8 @@ type ApplicationPackDetail @model @auth(rules:[
 }
 
 type Order @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   status: OrderStatus!
@@ -146,8 +150,8 @@ type Order @model @auth(rules:[
 }
 
 type OrderPackDetail @model @auth(rules:[
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "orgnizationId", groupClaim: "groups_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   orderId: ID! @index(name: "byOrderId")

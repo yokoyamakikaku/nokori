@@ -12,5 +12,18 @@
   "triggerTemplate": "PreTokenGeneration.json.ejs",
   "triggerEventPath": "PreTokenGeneration.event.json",
   "roleName": "nokoriAuthPreTokenGeneration",
-  "skipEdit": true
+  "skipEdit": true,
+  "permissions": {
+    "storage": {
+      "Account:@model(appsync)": [
+        "read"
+      ],
+      "AccountRole:@model(appsync)": [
+        "read"
+      ],
+      "Organization:@model(appsync)": [
+        "read"
+      ]
+    }
+  }
 }
