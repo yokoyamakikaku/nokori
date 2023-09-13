@@ -19,7 +19,7 @@
       "function": {
         "nokoriHandleOrganizationJob": {
           "deploymentBucketName": "amplify-nokori-main-160326-deployment",
-          "s3Key": "amplify-builds/nokoriHandleOrganizationJob-7752497663786f6b2f65-build.zip"
+          "s3Key": "amplify-builds/nokoriHandleOrganizationJob-572f2b6a4c635a4d5346-build.zip"
         },
         "nokoriAuthPreTokenGeneration": {
           "deploymentBucketName": "amplify-nokori-main-160326-deployment",
