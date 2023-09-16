@@ -47,19 +47,33 @@ enum JobStatus {
   FAILED
 }
 
-type Account @model @auth(rules:[
-  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+type AccountConfiguration @model @auth(rules: [
+  { allow: groups, groupsField: "accountId", groupClaim: "accounts", operations: [read, update] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, update] },
   { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   name: String!
+  accountId: String!
+  organizationId: String!
+}
+
+type Account @model @auth(rules:[
+  { allow: groups, groupsField: "accountId", groupClaim: "accounts", operations: [read] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
+]) {
+  id: ID!
+  configurationId: ID!
   userId: String!
     @index(name: "byUserId", queryField: "listAccountsByUserId")
     @index(name: "byUserIdAndOrganizationId", queryField: "listAccountsByUserIdAndOrganizationId", sortKeyFields: ["organizationId"])
   organizationId: ID! @index(name: "byOrganizationId", queryField: "listAccountsByOrganizationId")
+  roleId: ID!
   createdAt: AWSDateTime!
+  configuration: AccountConfiguration @hasOne(fields: ["configurationId"])
   organization: Organization @hasOne(fields: ["organizationId"])
-  role: AccountRole! @belongsTo(fields: ["id"])
+  role: AccountRole! @hasOne(fields: ["roleId"])
 }
 
 type AccountRole @model @auth(rules: [
@@ -68,24 +82,31 @@ type AccountRole @model @auth(rules: [
 ]) {
   id: ID!
   type: RoleType!
-  accountId: ID!
-    @index(name: "byAccountId")
-    @index(name: "byAccountIdAndOrganizationId", sortKeyFields: ["organizationId"])
-  organizationId: ID! @index(name: "byOrganizationId")
-  organization: Organization! @hasOne(fields: ["organizationId"])
-  account: Account! @hasOne(fields: ["accountId"])
+  organizationId: String!
+  accountId: String! @index(name: "byAccountIdAndOrganizationId", sortKeyFields: ["organizationId"])
 }
 
 type Organization @model @auth(rules: [
-  { allow: groups, groupsField: "id", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
-  { allow: groups, groupsField: "id", groupClaim: "organizations_as_member", operations: [read] }
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
+]) {
+  id: ID!
+  configurationId: ID!
+  organizationId: String!
+  accounts: [Account] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  applications: [Application] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  configuration: OrganizationConfiguration! @hasOne(fields: ["configurationId"])
+  orders: [Order] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  packs: [Pack] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+}
+
+type OrganizationConfiguration @model @auth(rules:[
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_manager", operations: [read, create, update, delete] },
+  { allow: groups, groupsField: "organizationId", groupClaim: "organizations_as_member", operations: [read] }
 ]) {
   id: ID!
   name: String!
-  accounts: [Account] @hasMany(indexName: "byOrganizationId", fields: ["id"])
-  packs: [Pack] @hasMany(indexName: "byOrganizationId", fields: ["id"])
-  applications: [Application] @hasMany(indexName: "byOrganizationId", fields: ["id"])
-  orders: [Order] @hasMany(indexName: "byOrganizationId", fields: ["id"])
+  organizationId: String!
 }
 
 type Pack @model @auth(rules:[
@@ -102,9 +123,9 @@ type Pack @model @auth(rules:[
   expiredAt: AWSDateTime!
   createdAt: AWSDateTime!
   organizationId: ID! @index(name: "byOrganizationId", sortKeyFields: ["createdAt"])
-  organization: Organization! @hasOne(fields: ["organizationId"])
   applicationPackDetails: [ApplicationPackDetail] @hasMany(indexName: "byPackId", fields: ["id"])
   orderPackDetails: [OrderPackDetail] @hasMany(indexName: "byPackId", fields: ["id"])
+  organization: Organization! @hasOne(fields: ["organizationId"])
 }
 
 type Application @model @auth(rules:[
@@ -116,7 +137,7 @@ type Application @model @auth(rules:[
   applicantId: ID! @index(name: "byApplicantId")
   createdAt: AWSDateTime!
   organization: Organization! @hasOne(fields: ["organizationId"])
-  applicant: Account! @hasOne (fields: ["applicantId"])
+  applicant: Account! @hasOne(fields: ["applicantId"])
   order: Order @belongsTo
   packDetails: [ApplicationPackDetail!] @hasMany(indexName: "byApplicationId", fields: ["id"])
 }
@@ -145,7 +166,7 @@ type Order @model @auth(rules:[
   applicationId: ID @index(name: "byApplicationId")
   createdAt: AWSDateTime!
   organization: Organization! @hasOne(fields: ["organizationId"])
-  application: Application @hasOne (fields: ["applicationId"])
+  application: Application @hasOne(fields: ["applicationId"])
   orderPackDetails: [OrderPackDetail!] @hasMany(indexName: "byOrderId", fields: ["id"])
 }
 
@@ -168,12 +189,12 @@ type OrganizationJob @model @auth (rules: [{ allow: owner, operations: [create, 
   type: OrganizationJobType!
   status: JobStatus!
   errorMessage: String
-  "type: CREATE"
+  """type: CREATE"""
   createName: String
   createAccountName: String
   createUserId: ID
   createId: ID
-  "type: JOIN"
+  """type: JOIN"""
   joinCode: String
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

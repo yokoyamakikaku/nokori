@@ -1,6 +1,9 @@
 {
   "permissions": {
     "storage": {
+      "AccountConfiguration:@model(appsync)": [
+        "create"
+      ],
       "Account:@model(appsync)": [
         "create"
       ],
@@ -8,6 +11,9 @@
         "create"
       ],
       "Organization:@model(appsync)": [
+        "create"
+      ],
+      "OrganizationConfiguration:@model(appsync)": [
         "create"
       ],
       "OrganizationJob:@model(appsync)": [

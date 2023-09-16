@@ -83,14 +83,6 @@
       "dependsOn": [
         {
           "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "nokoriApi"
-        },
-        {
-          "attributes": [
             "GraphQLAPIIdOutput"
           ],
           "category": "api",

@@ -5,7 +5,6 @@ const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb')
  * @type {import('@types/aws-lambda').PreTokenGenerationTriggerHandler}
  */
 exports.handler = async (event) => {
-  console.log({ event })
   const userId = event.userName
   if (typeof userId !== 'string') throw Error('userId does not exist')
 
@@ -13,6 +12,8 @@ exports.handler = async (event) => {
   const organizationsAsManager = []
   /** @type {string[]} */
   const organizationsAsMember = []
+  /** @type {string[]} */
+  const accounts = []
 
   const dynamoDB = new DynamoDB()
 
@@ -71,6 +72,8 @@ exports.handler = async (event) => {
           const [AccountRoleItem]  = AccountRoleItems
           if (!AccountRoleItem) throw Error(`NoAccountRole#${accountId}_${organizationId}`)
 
+          accounts.push(accountId)
+
           // NOTE: 権限の付与
           const { type } = unmarshall(AccountRoleItem)
           switch (type) {
@@ -97,6 +100,7 @@ exports.handler = async (event) => {
       claimsToAddOrOverride: {
         organizations_as_manager: JSON.stringify(organizationsAsManager),
         organizations_as_member : JSON.stringify(organizationsAsMember),
+        accounts                : JSON.stringify(accounts),
       }
     }
   }
